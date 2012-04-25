@@ -15,14 +15,18 @@
 
 ;;; for n >= 2, test for primality
 (defn prime? [n]
-  (if (= n 2)
-    true
+  (cond
+   (< n 2)
+   false
+   
+   (= n 2)
+   true
 
-    (let [factors (for [i (range 2 (inc (sqrt n)))
-                  :when (zero? (mod n i))]
-                    i)]
-      ;;(println "factors: " factors)
-      (nil? (first factors)))))
+   :else
+   (let [factors (for [i (range 2 (inc (sqrt n)))
+                       :when (zero? (mod n i))]
+                   i)]
+     (nil? (first factors)))))
                  
 
 ;;; generate all rotations of a text

@@ -20,7 +20,7 @@
 (defn truncate-right [n]
   (if (< n 10)
     (list n)
-    (cons n (lazy-seq (truncations (quot n 10))))))
+    (cons n (lazy-seq (truncate-right (quot n 10))))))
 
 ;; not general purpose - numbers ending with zero are wrong
 ;; however, no numbers we are testing will contain zeros

@@ -27,14 +27,6 @@
 (defn sorted-digit-key [n]
   (apply str (sort (str n))))
 
-
-;; return a map of key -> [vals], specfically to group
-;; all the numbers that are in a given permutation together.
-(defn prime-map [primes]
-  (reduce #(merge-with concat %1 {(sorted-digit-key %2) [%2]})
-          {}
-          primes))
-
 ;; given a list of primes (any number, really),
 ;; return a list of every ordered 3-pair where
 ;; whose values are equidistant
@@ -50,10 +42,11 @@
 ;; the solution here should probably be generalized just a bit. I'm very happy
 ;; with the logic, but the sequence of operations strikes me as a little awkward
 (defn answer []
-  ;; start with a map whose values are buckets containing sequences of 4digits
-  ;; primes that are permutations
-  (->> (prime-map prime-4digits)
-       ;; get the values only
+  (->> ;; start with all the 4-digit priems
+       prime-4digits
+       ;; group in to buckets by their sortkey
+       (group-by sorted-digit-key)
+       ;; get the values only - not interested in the keys
        (vals)
        ;; run each bucket through a function that returns increasing sequences
        ;; of 3-pairs that are equidistant as a list of 3-pairs
